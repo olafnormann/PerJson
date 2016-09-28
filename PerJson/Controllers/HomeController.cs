@@ -4,17 +4,18 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PerJson.PerService;
-using System.Web.Helpers;
- 
+using System.Web.Script.Serialization;
+
+
 namespace PerJson.Controllers
 {
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
-         
-            JsonResult gg = new JsonResult();
-            System.String tt;
+            
+            JavaScriptSerializer jser = new JavaScriptSerializer();
+            System.String str;
             Person pp;
             PersonServiceClient ps = new PersonServiceClient();
             LookupParameters lookup = new LookupParameters();
@@ -22,8 +23,9 @@ namespace PerJson.Controllers
             ps.ClientCredentials.UserName.UserName = "test";
             ps.ClientCredentials.UserName.Password = "BF32511";
             pp = ps.GetPerson(lookup);
+
+            str = jser.Serialize(pp);
             
-          gg.Data = Json();
             return View();
         }
 
